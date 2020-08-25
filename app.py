@@ -1,13 +1,14 @@
 import logging
 from logging.handlers import RotatingFileHandler
 
+from colour import Color
 from flask import Flask, render_template, request, send_from_directory
 from flask_wtf import FlaskForm
+import random
 from wtforms import StringField, validators
 from wtforms_components import ColorField
-from webcolors import hex_to_rgb
 
-from .blinkie import make_gif 
+from blinkie import make_gif
 
 
 app = Flask(__name__)
@@ -38,15 +39,30 @@ def generate_page():
 
     if form.validate_on_submit():
         text = form.text.data
-        background_color = tuple(int(x * 255) for x in form.background_color.data.rgb)
-        text_color = tuple(int(x * 255) for x in form.text_color.data.rgb)
-        blink_color = tuple(int(x * 255) for x in form.blink_color.data.rgb)
-        print(background_color)
+        gif_background_color = tuple(int(x * 255) for x in form.background_color.data.rgb)
+        gif_text_color = tuple(int(x * 255) for x in form.text_color.data.rgb)
+        gif_blink_color = tuple(int(x * 255) for x in form.blink_color.data.rgb)
 
-        filename = make_gif(text, background_color, text_color, blink_color)
+        filename = make_gif(text, gif_background_color, gif_text_color, gif_blink_color)
         app.logger.info(filename)
 
-    return render_template('generate.html', form=form, filename=filename)
+        background_color = form.background_color.data
+        text_color = form.text_color.data
+        blink_color = form.blink_color.data
+    else:
+        text_color = '#000000'
+        blink_color = '#ffffff'
+        background_color = Color()
+        background_color.red = random.random()
+        background_color.green = random.random()
+        background_color.blue = random.random()
+
+    return render_template('generate.html',
+                           form=form,
+                           filename=filename,
+                           text_color=text_color,
+                           blink_color=blink_color,
+                           background_color=background_color)
 
 
 @app.route('/output/<path:path>')
