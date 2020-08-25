@@ -81,7 +81,7 @@ def make_gif(word, rgb_color, text_color, text_blink_color):
     images.append(all_image)
     images.append(base_image)
 
-    filename = f'{OUTPUT_FOLDER}/{word}.gif'
+    filename = f'{OUTPUT_FOLDER}/{word}.gif'.replace(' ', '_')
     images[0].save(filename,
                    save_all=True,
                    append_images=images[1:],

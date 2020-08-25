@@ -43,11 +43,14 @@
                 </form>
             </div>
             <div class="col-md">
+                {% if filename %}
                 <div class="row justify-content-center">
-                    {% if filename %}
                     <img src="{{filename}}">
-                    {% endif %}
                 </div>
+                <div class="row justify-content-center">
+                    <p class="text-small text-secondary my-3"><small>(right-click -> save image as!)</small></p>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>
