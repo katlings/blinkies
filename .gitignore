@@ -133,3 +133,7 @@ REDENSEK.TTF
 
 # all outputs
 *.gif
+
+# vim
+*.swp
+*.swo

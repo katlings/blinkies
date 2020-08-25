@@ -1,2 +1,6 @@
+colour==0.1.5
+Flask==1.1.2
 Pillow==7.2.0
 webcolors==1.11.1
+WTForms==2.3.3
+WTForms-Components==0.10.4

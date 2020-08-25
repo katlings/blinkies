@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-# imageio for giffing
-import sys
-
 from PIL import Image, ImageColor, ImageDraw, ImageFont
 from webcolors import name_to_rgb
+
+
+OUTPUT_FOLDER='output'
 
 
 def make_gif(word, rgb_color, text_color, text_blink_color):
@@ -21,8 +21,7 @@ def make_gif(word, rgb_color, text_color, text_blink_color):
     base_image = Image.new('P', (width, height), color=worst_magenta)
     base_draw = ImageDraw.Draw(base_image)
 
-    black = (0, 0, 0, 255)
-    white = (255, 255, 255, 255)
+    black = (0, 0, 0)
     # calculate shading
     # this would probably look BETTER if it were ratioed instead of absolute,
     # but it's actually not fucking bad
@@ -82,7 +81,14 @@ def make_gif(word, rgb_color, text_color, text_blink_color):
     images.append(all_image)
     images.append(base_image)
 
-    return images
+    filename = f'{OUTPUT_FOLDER}/{word}.gif'
+    images[0].save(filename,
+                   save_all=True,
+                   append_images=images[1:],
+                   duration=300,
+                   loop=0,
+                   transparency=0) # i do not know. something about the order of colors
+    return filename
 
 
 def main():
@@ -119,15 +125,7 @@ def main():
         except ValueError:
             print('Not a valid color\n')
 
-    images = make_gif(word, rgb_color, text_color, text_blink_color)
-    images[0].save(f'{word}.gif',
-                   save_all=True,
-                   append_images=images[1:],
-                   duration=300,
-                   loop=0,
-                   transparency=0) # i do not know. something about the order of colors
-    return
-
+    make_gif(word, rgb_color, text_color, text_blink_color)
 
 
 if __name__ == "__main__":

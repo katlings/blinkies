@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>
+        a blinkie for you <3
+    </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="static/spectrum.js"></script>
+    <link rel="stylesheet" href="static/spectrum.css" />
+    -->
+</head>
+<body>
+    <div class="container">
+        <div class="row my-3 pt-3 align-items-center">
+            <div class="col-md-5">
+                <form action="" method="POST">
+                    <div class="form-group row">
+                        {{ form.text.label(class_="col-form-label col-2")}}
+                        {{ form.text(class_="form-control col") }}
+                    </div>
+                    <div class="form-group row">
+                        <div class="col my-3 mx-1">
+                        {{ form.background_color.label }}
+                        {{ form.background_color(class_="form-control") }}
+                        </div>
+                        <div class="col my-3 mx-1">
+                        {{ form.text_color.label }}
+                        {{ form.text_color(class_="form-control") }}
+                        </div>
+                        <div class="col my-3 mx-1">
+                        {{ form.blink_color.label }}
+                        {{ form.blink_color(class_="form-control") }}
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <input type='submit' class='btn btn-primary my-3' value='Make me a blinkie'>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md">
+                <div class="row justify-content-center">
+                    {% if filename %}
+                    <img src="{{filename}}">
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+  <footer class="page-footer fixed-bottom font-small text-center text-secondary">
+    <p>
+      made with love by <a class="text-info" href="https://www.twitter.com/hartknyx">@hartknyx</a> |
+      open source at <a class="text-info" href="https://www.github.com/katlings/blinkies">github</a>
+    </p>
+  </footer>
+  <!--
+  <script>
+      $("#background_color").spectrum({color: '#ff0000'});
+      $("#text_color").spectrum({color: '#000000'});
+      $("#blink_color").spectrum({color: '#ffffff'});
+  </script>
+  -->
+</body>
+</html>
