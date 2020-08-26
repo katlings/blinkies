@@ -1,9 +1,15 @@
 #!/usr/bin/env python3
+import re
+
 from PIL import Image, ImageColor, ImageDraw, ImageFont
 from webcolors import name_to_rgb
 
 
 OUTPUT_FOLDER='output'
+
+
+def alpha(s):
+    return re.sub(r'[^a-z]+', '', s.lower())
 
 
 def make_gif(word, rgb_color, text_color, text_blink_color):
@@ -81,7 +87,8 @@ def make_gif(word, rgb_color, text_color, text_blink_color):
     images.append(all_image)
     images.append(base_image)
 
-    filename = f'{OUTPUT_FOLDER}/{word}.gif'.replace(' ', '_')
+    clean_word = alpha(word) or 'x'
+    filename = f'{OUTPUT_FOLDER}/{clean_word}.gif'
     images[0].save(filename,
                    save_all=True,
                    append_images=images[1:],

@@ -37,6 +37,13 @@
                         {{ form.blink_color(class_="form-control", value=blink_color) }}
                         </div>
                     </div>
+                    {% if form.errors %}
+                    <div class="row">
+                        {% for field, errors in form.errors.items() %}
+                            <p class="text-danger">{{ field }}: {{ ', '.join(errors) }}</p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
                     <div class="row justify-content-center">
                         <input type='submit' class='btn btn-primary my-3' value='Make me a blinkie'>
                     </div>

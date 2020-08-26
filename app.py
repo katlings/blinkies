@@ -22,7 +22,7 @@ app.logger.addHandler(handler)
 
 
 class BlinkieForm(FlaskForm):
-    text = StringField('Text', [validators.length(max=64)])
+    text = StringField('Text', [validators.length(max=64), validators.length(min=1)])
     background_color = ColorField('Blinkie Color')
     text_color = ColorField('Text Color')
     blink_color = ColorField('Text Blink Color')
@@ -33,11 +33,9 @@ def generate_page():
     form = BlinkieForm()
     filename = None
 
-    app.logger.debug(form.validate())
-    if form.errors:
-        app.logger.warning(form.errors)
-
     if form.validate_on_submit():
+        if form.errors:
+            app.logger.warning(form.errors)
         text = form.text.data
         gif_background_color = tuple(int(x * 255) for x in form.background_color.data.rgb)
         gif_text_color = tuple(int(x * 255) for x in form.text_color.data.rgb)
@@ -46,9 +44,9 @@ def generate_page():
         filename = make_gif(text, gif_background_color, gif_text_color, gif_blink_color)
         app.logger.info(filename)
 
-        background_color = form.background_color.data
-        text_color = form.text_color.data
-        blink_color = form.blink_color.data
+        background_color = form.background_color.data.get_hex_l()
+        text_color = form.text_color.data.get_hex_l()
+        blink_color = form.blink_color.data.get_hex_l()
     else:
         text_color = '#000000'
         blink_color = '#ffffff'
@@ -56,6 +54,7 @@ def generate_page():
         background_color.red = random.random()
         background_color.green = random.random()
         background_color.blue = random.random()
+        background_color = background_color.get_hex_l()
 
     return render_template('generate.html',
                            form=form,
